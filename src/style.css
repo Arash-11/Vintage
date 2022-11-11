@@ -1,17 +1,66 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.button {
+  border: solid 2px;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
 body {
   padding: 1rem;
+  height: 100%;
+  display: flex;
+  gap: 1rem;
 }
 
-input[data-file-uploader] {
-  padding-bottom: 1rem;
+.original-wrapper,
+.new-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  flex: 1 1 50%;
 }
 
+.upload-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-text {
+  color: red;
+}
+
+.original-img,
 .canvas {
   max-width: 100%;
+  max-height: 90%;
+}
+
+@media screen and (max-width: 820px) {
+  body {
+    flex-direction: column;
+  }
 }
