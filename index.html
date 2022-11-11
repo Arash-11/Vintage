@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./src/style.css">
   </head>
   <body>
-    <section class="original-wrapper">
+    <section class="original-wrapper" aria-label="original-image">
       <div class="upload-wrapper">
         <label class="button" data-upload-label>
           Upload image
@@ -35,7 +35,7 @@
       >
     </section>
 
-    <section class="new-wrapper">
+    <section class="modified-wrapper" aria-label="modified-image">
       <a
         href=""
         class="button"
@@ -47,6 +47,14 @@
 
       <canvas class="canvas"></canvas>
     </section>
+
+    <a
+      class="gh-link"
+      href="https://github.com/Arash-11/Vintage"
+      target="_blank"
+    >
+      GitHub
+    </a>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
