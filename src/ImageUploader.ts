@@ -1,26 +1,71 @@
 export default class ImageUploader {
-  fileUploader: HTMLInputElement;
+  canvas: HTMLCanvasElement;
+  uploadLabel: HTMLLabelElement;
+  uploadInput: HTMLInputElement;
+  originalImg: HTMLImageElement;
+  downloadEl: HTMLAnchorElement;
+  errorTextEl: HTMLParagraphElement;
   imgEl: HTMLImageElement;
 
-  constructor() {
-    this.fileUploader = document.querySelector('[data-file-uploader]')!;
+  constructor(canvas: HTMLCanvasElement) {
+    this.canvas = canvas;
+    this.uploadLabel = document.querySelector('[data-upload-label]')!;
+    this.uploadInput = document.querySelector('[data-upload-input]')!;
+    this.originalImg = document.querySelector('[data-original-img]')!;
+    this.downloadEl = document.querySelector('[data-download]')!;
+    this.errorTextEl = document.querySelector('[data-error-text]')!;
     this.imgEl = new Image();
+
+    this.onInitialLoad();
+
+    this.listenForImgUpload();
   }
 
   get image(): HTMLImageElement {
-    this.fileUploader.addEventListener('change', evt => {
+    return this.imgEl;
+  }
+
+  onInitialLoad() {
+    this.imgEl.src = this.originalImg.src;
+  }
+
+  listenForImgUpload() {
+    this.uploadInput.addEventListener('change', evt => {
       const reader = new FileReader();
       const file = (evt.target as HTMLInputElement)!.files![0];
 
-      if (file.type.split('/')[0] === 'image') {
-        reader.readAsDataURL(file);
-
-        reader.addEventListener('loadend', () => {
-          this.imgEl.src = (reader.result as string);
-        });
+      if (file.type.split('/')[0] !== 'image') {
+        this.displayErrorText();
+        return;
       }
-    });
 
-    return this.imgEl;
+      reader.readAsDataURL(file);
+
+      reader.addEventListener('loadstart', () => {
+        this.uploadLabel.textContent = 'Uploading...';
+      });
+
+      reader.addEventListener('load', () => {
+        const uploadedImg = (reader.result as string);
+        this.originalImg.src = uploadedImg;
+        this.imgEl.src = uploadedImg;
+        this.uploadLabel.textContent = 'Upload image';
+        this.prepareDownloadBtn(file.name);
+        this.hideErrorText();
+      });
+    });
+  }
+
+  prepareDownloadBtn(fileName: string) {
+    this.downloadEl.href = this.canvas.toDataURL();
+    this.downloadEl.download = fileName.replace(/(\w+).(\w+)/g, `$1_vintage.$2`);
+  }
+
+  displayErrorText() {
+    this.errorTextEl.classList.remove('is-hidden');
+  }
+
+  hideErrorText() {
+    this.errorTextEl.classList.add('is-hidden');
   }
 }

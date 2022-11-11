@@ -7,8 +7,47 @@
     <link rel="stylesheet" href="./src/style.css">
   </head>
   <body>
-    <input type="file" data-file-uploader>
-    <canvas class="canvas"></canvas>
+    <section class="original-wrapper">
+      <div class="upload-wrapper">
+        <label class="button" data-upload-label>
+          Upload image
+          <input
+            hidden
+            type="file"
+            accept="image/*"
+            data-upload-input
+          >
+        </label>
+    
+        <p
+          class="is-hidden error-text"
+          data-error-text
+        >
+          File is not valid. Please upload an image.
+        </p>
+      </div>
+
+      <img
+        class="original-img"
+        src="houses.jpg"
+        alt="No alt text available. This is an image uploaded by user."
+        data-original-img
+      >
+    </section>
+
+    <section class="new-wrapper">
+      <a
+        href=""
+        class="button"
+        download="houses_vintage.jpg"
+        data-download
+      >
+        Save image
+      </a>
+
+      <canvas class="canvas"></canvas>
+    </section>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
