@@ -1,6 +1,6 @@
 export default class ImageUploader {
   canvas: HTMLCanvasElement;
-  uploadLabel: HTMLLabelElement;
+  uploadLabelText: HTMLLabelElement;
   uploadInput: HTMLInputElement;
   originalImg: HTMLImageElement;
   downloadEl: HTMLAnchorElement;
@@ -9,7 +9,7 @@ export default class ImageUploader {
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
-    this.uploadLabel = document.querySelector('[data-upload-label]')!;
+    this.uploadLabelText = document.querySelector('[data-upload-label-text]')!;
     this.uploadInput = document.querySelector('[data-upload-input]')!;
     this.originalImg = document.querySelector('[data-original-img]')!;
     this.downloadEl = document.querySelector('[data-download]')!;
@@ -34,6 +34,8 @@ export default class ImageUploader {
       const reader = new FileReader();
       const file = (evt.target as HTMLInputElement)!.files![0];
 
+      if (!file) return;
+
       if (file.type.split('/')[0] !== 'image') {
         this.displayErrorText();
         return;
@@ -42,14 +44,14 @@ export default class ImageUploader {
       reader.readAsDataURL(file);
 
       reader.addEventListener('loadstart', () => {
-        this.uploadLabel.textContent = 'Uploading...';
+        this.uploadLabelText.textContent = 'Uploading...';
       });
 
       reader.addEventListener('load', () => {
         const uploadedImg = (reader.result as string);
         this.originalImg.src = uploadedImg;
         this.imgEl.src = uploadedImg;
-        this.uploadLabel.textContent = 'Upload image';
+        this.uploadLabelText.textContent = 'Upload image';
         this.prepareDownloadBtn(file.name);
         this.hideErrorText();
       });
