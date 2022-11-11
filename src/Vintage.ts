@@ -28,8 +28,8 @@ export default class Vintage {
   
     for (let i = 0; i < dataLen; i += 4) {
       const rand = Math.random();
-      // We're aiming to modify only 20% of the pixels of the original image.
-      // Theoretically, `rand < 0.2` has about a 20% probability of returning true.
+      // We're aiming to modify only 10% of the pixels of the original image.
+      // Theoretically, `rand < 0.1` has about a 10% probability of returning true.
       if (rand < 0.1) {
         const val = Math.floor(rand * 255);
         data[i + 0] = val;                                 // R value
