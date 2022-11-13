@@ -1,3 +1,5 @@
+import { rgbToHsl, hslToRgb } from "./utils";
+
 export default class Vintage {
   canvas: HTMLCanvasElement;
   img: HTMLImageElement;
@@ -18,7 +20,29 @@ export default class Vintage {
 
   filterImage() {
     this.ctx.filter = 'blur(2px) saturate(70%) contrast(80%) sepia(70%)';
+
+    // Decrease saturation by 70%
+    this.modifySaturation(0.7);
+
     this.ctx.drawImage(this.img, 0, 0);
+  }
+
+  modifySaturation(modifier: number) {
+    const imageData = this.ctx.getImageData(0 , 0, this.canvas.width, this.canvas.height);
+    const { data } = imageData;
+    const dataLen = data.length;
+
+    for (let i = 0; i < dataLen; i += 4) {
+      // Convert rgb to hsl
+      const { h, s, l } = rgbToHsl(data[i + 0], data[i + 1], data[i + 2]);
+
+      // Modify `s` value in hsl and convert hsl to rgb
+      const { r, g, b } = hslToRgb(h, s * modifier, l);
+
+      data[i + 0] = r;
+      data[i + 1] = g;
+      data[i + 2] = b;
+    }
   }
 
   addNoise() {
