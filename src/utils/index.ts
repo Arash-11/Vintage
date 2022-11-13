@@ -1,2 +1,3 @@
-export * from "./rgbToHsl";
-export * from "./hslToRgb";
+export * from "./modifyContrast";
+export * from "./modifySaturation";
+export * from "./addNoise";

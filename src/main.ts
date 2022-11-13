@@ -1,7 +1,7 @@
-import ImageUploader from "./ImageUploader";
+import ImageUploadDownload from "./ImageUploadDownload";
 import Vintage from "./Vintage";
 
 const canvas: HTMLCanvasElement = document.querySelector('.canvas')!;
-const imageUploader = new ImageUploader(canvas);
+const imageUploadDownload = new ImageUploadDownload(canvas);
 
-new Vintage(canvas, imageUploader.image);
+new Vintage(canvas, imageUploadDownload.image);

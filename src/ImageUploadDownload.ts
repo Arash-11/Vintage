@@ -1,4 +1,4 @@
-export default class ImageUploader {
+export default class ImageUploadDownload {
   canvas: HTMLCanvasElement;
   uploadLabelText: HTMLLabelElement;
   uploadInput: HTMLInputElement;
@@ -49,9 +49,12 @@ export default class ImageUploader {
 
       reader.addEventListener('load', () => {
         const uploadedImg = (reader.result as string);
+
         this.originalImg.src = uploadedImg;
         this.imgEl.src = uploadedImg;
+
         this.uploadLabelText.textContent = 'Upload image';
+
         this.prepareDownloadBtn(file.name);
         this.hideErrorText();
       });
