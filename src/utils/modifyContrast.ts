@@ -9,10 +9,9 @@ export const modifyContrast = (
   contrast: number,
   brightness: number = 0
 ) => {
+  // Limit the value between 0 and 255
   function truncate(val: number) {
-    if (val < 0) return 0;
-    else if (val > 255) return 255;
-    else return val;
+    return Math.min(255, Math.max(0, val));
   }
 
   return {
