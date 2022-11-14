@@ -1,4 +1,9 @@
-import { modifyContrast, modifySaturation, addNoise } from "./utils";
+import {
+  modifyContrast,
+  modifySaturation,
+  addNoise,
+  addSepia,
+} from "./utils";
 
 export default class Vintage {
   canvas: HTMLCanvasElement;
@@ -18,8 +23,6 @@ export default class Vintage {
   }
 
   applyFilters() {
-    // this.ctx.filter = 'blur(2px) sepia(70%)';
-
     this.ctx.drawImage(this.img, 0, 0);
 
     const imageData = this.ctx.getImageData(0 , 0, this.canvas.width, this.canvas.height);
@@ -31,7 +34,7 @@ export default class Vintage {
       const g = data[i + 1];
       const b = data[i + 2];
 
-      // Apply 2px blur effect
+      // To do: Apply blur (approx. 2px)
 
       // Decrease saturation to 70%
       const { satR, satG, satB } = modifySaturation({ r, g, b }, 0.7);
@@ -39,11 +42,14 @@ export default class Vintage {
       // Decrease contrast to 80%
       const { conR, conG, conB } = modifyContrast({ r: satR, g: satG, b: satB }, 0.8);
 
-      // Apply 70% sepia
+      // Apply sepia
+      const { sepR, sepG, sepB } = addSepia({ r: conR, g: conG, b: conB });
 
-      data[i + 0] = conR;
-      data[i + 1] = conG;
-      data[i + 2] = conB;
+      // To do: Apply vignetting effect
+
+      data[i + 0] = sepR;
+      data[i + 1] = sepG;
+      data[i + 2] = sepB;
     }
 
     this.ctx.putImageData(imageData, 0, 0);
