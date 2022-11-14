@@ -1,6 +1,6 @@
 # 📜 Vintage
 
-A basic site that applies a vintage filter to your image.
+Apply a vintage filter to your image. All of the image processing is done on the client-side; no servers are being used.
 
 Check it out here: https://vintage-image.vercel.app/.
 
